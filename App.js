@@ -6,16 +6,17 @@ const instructions = Platform.select({
   android: 'Double tap R on your keyboard to reload,\n' + 'Shake or press menu button for dev menu',
 });
 
-export default class App extends Component {
-  render() {
-    return (
+export default function App() {
+  
+  const [count, setCount] = useState(0);
+    
+  return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+      <Text style={styles.welcome}>Count: {count}</Text>
+      <Button title="Adicionar" onPress={() => setCount(count + 1)}/>
+      <Button title="Resetar" onPress={() => setCount(0)}/>
       </View>
     );
-  }
 }
 
 const styles = StyleSheet.create({
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   welcome: {
-    fontSize: 20,
+    fontSize: 40,
     textAlign: 'center',
     margin: 10,
   },
