@@ -9,12 +9,12 @@ const instructions = Platform.select({
 export default function App() {
   
   const [count, setCount] = useState(0);
-    
+  //reseta  
   return (
       <View style={styles.container}>
       <Text style={styles.welcome}>Count: {count}</Text>
       <Button title="Adicionar" onPress={() => setCount(count + 1)}/>
-      <Button title="Resetar" onPress={() => setCount(0)}/>
+      <Button title="Resetar" onPress={() => setCount(0)}/> 
       </View>
     );
 }
