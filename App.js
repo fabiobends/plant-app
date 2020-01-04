@@ -9,7 +9,7 @@ const instructions = Platform.select({
 export default function App() {
   
   const [count, setCount] = useState(0);
-  //reseta  
+  //resetar 
   return (
       <View style={styles.container}>
       <Text style={styles.welcome}>Count: {count}</Text>
