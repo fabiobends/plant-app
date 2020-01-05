@@ -1,23 +1,71 @@
 import React, { Component, useState } from 'react';
 import { Platform, StyleSheet, Text, View, Button} from 'react-native';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' + 'Shake or press menu button for dev menu',
-});
+import { AppLoading, Asset } from 'expo';
 
-export default function App() {
+import Navigation from './navigation';
+import { Block } from './constants';
+
+// import all used images
+const images = [
+  require('./assets/icons/back.png'),
+  require('./assets/icons/plants.png'),
+  require('./assets/icons/seeds.png'),
+  require('./assets/icons/flowers.png'),
+  require('./assets/icons/sprayers.png'),
+  require('./assets/icons/pots.png'),
+  require('./assets/icons/fertilizers.png'),
+  require('./assets/images/plants_1.png'),
+  require('./assets/images/plants_2.png'),
+  require('./assets/images/plants_3.png'),
+  require('./assets/images/explore_1.png'),
+  require('./assets/images/explore_2.png'),
+  require('./assets/images/explore_3.png'),
+  require('./assets/images/explore_4.png'),
+  require('./assets/images/explore_5.png'),
+  require('./assets/images/explore_6.png'),
+  require('./assets/images/avatar.png'),
+];
+
+// const instructions = Platform.select({
+//   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
+//   android: 'Double tap R on your keyboard to reload,\n' + 'Shake or press menu button for dev menu',
+// });
+
+export default class App extends Component {
   
-  const [count, setCount] = useState(0);
-  //resetar 
-  //besteira
-  return (
-      <View style={styles.container}>
-      <Text style={styles.welcome}>Count: {count}</Text>
-      <Button title="Adicionar" onPress={() => setCount(count + 1)}/>
-      <Button title="Resetar" onPress={() => setCount(0)}/> 
-      </View>
+  state = {
+    isLoadingComplete: false,
+  }
+
+  handleResourcesAsync = async() => {
+    // we're caching all the images
+    // for better perfomance on the app 
+    const cacheImages = images.map(img => {
+      return Asset.fromModule(image).downloadAsync();
+    })
+
+    return Promise.all(cacheImages);  
+  }
+
+  render(){
+    
+    if(!this.state.isLoadingComplete && !this.props.skipLoadingScreen){
+      return (
+        <AppLoading
+         startAsync={!this.handleResourcesAsync}
+         onError={error => console.warn(error)}
+         onFinish={() => this.setState({ isLoadingComplete: true })}
+         />
+      )
+    }
+    
+    return (
+        <View style={styles.container}>
+          <Navigation />
+        </View>
     );
+  }    
 }
 
 const styles = StyleSheet.create({
@@ -26,15 +74,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 40,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  }
 });
+
