@@ -42,7 +42,7 @@ export default class App extends Component {
     // we're caching all the images
     // for better perfomance on the app 
     const cacheImages = images.map(img => {
-      return Asset.fromModule(image).downloadAsync();
+      return Asset.fromModule(images).downloadAsync();
     })
 
     return Promise.all(cacheImages);  
